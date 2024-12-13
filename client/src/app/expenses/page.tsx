@@ -238,7 +238,7 @@ const Expenses = () => {
         return acc;
       }, {});
 
-    return Object.values(filtered).map((item, index) => ({
+    return Object.values(filtered).map((item) => ({
       ...item,
       color: item.color || `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Ensure every entry has a color
     }));

@@ -1,3 +1,316 @@
+// import { useRef } from "react";
+// import { combineReducers, configureStore } from "@reduxjs/toolkit";
+// import {
+//   TypedUseSelectorHook,
+//   useDispatch,
+//   useSelector,
+//   Provider,
+// } from "react-redux";
+// import globalReducer from "@/app/state/index";
+// import { api } from "@/app/state/api";
+// import { setupListeners } from "@reduxjs/toolkit/query";
+
+// import {
+//   persistStore,
+//   persistReducer,
+//   FLUSH,
+//   REHYDRATE,
+//   PAUSE,
+//   PERSIST,
+//   PURGE,
+//   REGISTER,
+// } from "redux-persist";
+// import { PersistGate } from "redux-persist/integration/react";
+// import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+
+// /* REDUX PERSISTENCE */
+// const createNoopStorage = () => {
+//   return {
+//     getItem(_key: any) {
+//       return Promise.resolve(null);
+//     },
+//     setItem(_key: any, value: any) {
+//       return Promise.resolve(value);
+//     },
+//     removeItem(_key: any) {
+//       return Promise.resolve();
+//     },
+//   };
+// };
+
+// const storage =
+//   typeof window === "undefined"
+//     ? createNoopStorage()
+//     : createWebStorage("local");
+
+// const persistConfig = {
+//   key: "root",
+//   storage,
+//   whitelist: ["global"],
+// };
+// const rootReducer = combineReducers({
+//   global: globalReducer,
+//   [api.reducerPath]: api.reducer,
+// });
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// /* REDUX STORE */
+// export const makeStore = () => {
+//   return configureStore({
+//     reducer: persistedReducer,
+//     middleware: (getDefaultMiddleware) =>
+//       getDefaultMiddleware({
+//         serializableCheck: {
+//           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+//         },
+//       }).concat(api.middleware),
+//   });
+// };
+
+// /* REDUX TYPES */
+// export type AppStore = ReturnType<typeof makeStore>;
+// export type RootState = ReturnType<AppStore["getState"]>;
+// export type AppDispatch = AppStore["dispatch"];
+// export const useAppDispatch = () => useDispatch<AppDispatch>();
+// export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+// /* PROVIDER */
+// export default function StoreProvider({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   const storeRef = useRef<AppStore>();
+//   if (!storeRef.current) {
+//     storeRef.current = makeStore();
+//     setupListeners(storeRef.current.dispatch);
+//   }
+//   const persistor = persistStore(storeRef.current);
+
+//   return (
+//     <Provider store={storeRef.current}>
+//       <PersistGate loading={null} persistor={persistor}>
+//         {children}
+//       </PersistGate>
+//     </Provider>
+//   );
+// }
+
+
+
+// import { useRef } from "react";
+// import { combineReducers, configureStore } from "@reduxjs/toolkit";
+// import {
+//   TypedUseSelectorHook,
+//   useDispatch,
+//   useSelector,
+//   Provider,
+// } from "react-redux";
+// import globalReducer from "@/app/state/index";
+// import { api } from "@/app/state/api";
+// import { setupListeners } from "@reduxjs/toolkit/query";
+
+// import {
+//   persistStore,
+//   persistReducer,
+//   FLUSH,
+//   REHYDRATE,
+//   PAUSE,
+//   PERSIST,
+//   PURGE,
+//   REGISTER,
+// } from "redux-persist";
+// import { PersistGate } from "redux-persist/integration/react";
+// import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+// import { Storage } from "redux-persist";
+
+// /* REDUX PERSISTENCE - Noop Storage Implementation */
+// const createNoopStorage = (): Storage => {
+//   return {
+//     getItem(key: string): Promise<string | null> {
+//       // Simulate getting a value from storage
+//       return Promise.resolve(null);
+//     },
+//     setItem(key: string, value: string): Promise<void> {
+//       // Simulate setting a value in storage
+//       return Promise.resolve();
+//     },
+//     removeItem(key: string): Promise<void> {
+//       // Simulate removing a value from storage
+//       return Promise.resolve();
+//     },
+//   };
+// };
+
+// const storage =
+//   typeof window === "undefined"
+//     ? createNoopStorage()
+//     : createWebStorage("local");
+
+// const persistConfig = {
+//   key: "root",
+//   storage,
+//   whitelist: ["global"],
+// };
+
+// const rootReducer = combineReducers({
+//   global: globalReducer,
+//   [api.reducerPath]: api.reducer,
+// });
+
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// /* REDUX STORE */
+// export const makeStore = () => {
+//   return configureStore({
+//     reducer: persistedReducer,
+//     middleware: (getDefaultMiddleware) =>
+//       getDefaultMiddleware({
+//         serializableCheck: {
+//           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+//         },
+//       }).concat(api.middleware),
+//   });
+// };
+
+// /* REDUX TYPES */
+// export type AppStore = ReturnType<typeof makeStore>;
+// export type RootState = ReturnType<AppStore["getState"]>;
+// export type AppDispatch = AppStore["dispatch"];
+// export const useAppDispatch = () => useDispatch<AppDispatch>();
+// export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+// /* PROVIDER */
+// export default function StoreProvider({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   const storeRef = useRef<AppStore>();
+//   if (!storeRef.current) {
+//     storeRef.current = makeStore();
+//     setupListeners(storeRef.current.dispatch);
+//   }
+//   const persistor = persistStore(storeRef.current);
+
+//   return (
+//     <Provider store={storeRef.current}>
+//       <PersistGate loading={null} persistor={persistor}>
+//         {children}
+//       </PersistGate>
+//     </Provider>
+//   );
+// }
+
+
+
+
+// import { useRef } from "react";
+// import { combineReducers, configureStore } from "@reduxjs/toolkit";
+// import {
+//   TypedUseSelectorHook,
+//   useDispatch,
+//   useSelector,
+//   Provider,
+// } from "react-redux";
+// import globalReducer from "@/app/state/index";
+// import { api } from "@/app/state/api";
+// import { setupListeners } from "@reduxjs/toolkit/query";
+
+// import {
+//   persistStore,
+//   persistReducer,
+//   FLUSH,
+//   REHYDRATE,
+//   PAUSE,
+//   PERSIST,
+//   PURGE,
+//   REGISTER,
+// } from "redux-persist";
+// import { PersistGate } from "redux-persist/integration/react";
+// import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+// import { Storage } from "redux-persist";
+
+// /* REDUX PERSISTENCE - Noop Storage Implementation */
+// const createNoopStorage = (): Storage => {
+//   return {
+//     getItem(_key: string): Promise<string | null> {
+//       // Simulate getting a value from storage
+//       return Promise.resolve(null);
+//     },
+//     setItem(_key: string, _value: string): Promise<void> {
+//       // Simulate setting a value in storage
+//       return Promise.resolve();
+//     },
+//     removeItem(_key: string): Promise<void> {
+//       // Simulate removing a value from storage
+//       return Promise.resolve();
+//     },
+//   };
+// };
+
+// const storage =
+//   typeof window === "undefined"
+//     ? createNoopStorage()
+//     : createWebStorage("local");
+
+// const persistConfig = {
+//   key: "root",
+//   storage,
+//   whitelist: ["global"],
+// };
+
+// const rootReducer = combineReducers({
+//   global: globalReducer,
+//   [api.reducerPath]: api.reducer,
+// });
+
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// /* REDUX STORE */
+// export const makeStore = () => {
+//   return configureStore({
+//     reducer: persistedReducer,
+//     middleware: (getDefaultMiddleware) =>
+//       getDefaultMiddleware({
+//         serializableCheck: {
+//           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+//         },
+//       }).concat(api.middleware),
+//   });
+// };
+
+// /* REDUX TYPES */
+// export type AppStore = ReturnType<typeof makeStore>;
+// export type RootState = ReturnType<AppStore["getState"]>;
+// export type AppDispatch = AppStore["dispatch"];
+// export const useAppDispatch = () => useDispatch<AppDispatch>();
+// export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+// /* PROVIDER */
+// export default function StoreProvider({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   const storeRef = useRef<AppStore>();
+//   if (!storeRef.current) {
+//     storeRef.current = makeStore();
+//     setupListeners(storeRef.current.dispatch);
+//   }
+//   const persistor = persistStore(storeRef.current);
+
+//   return (
+//     <Provider store={storeRef.current}>
+//       <PersistGate loading={null} persistor={persistor}>
+//         {children}
+//       </PersistGate>
+//     </Provider>
+//   );
+// }
+
+
+
 import { useRef } from "react";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
@@ -22,17 +335,24 @@ import {
 } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import { Storage } from "redux-persist";
 
-/* REDUX PERSISTENCE */
-const createNoopStorage = () => {
+/* REDUX PERSISTENCE - Noop Storage Implementation */
+const createNoopStorage = (): Storage => {
   return {
-    getItem(_key: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    getItem(_key: string): Promise<string | null> {
+      // Simulate getting a value from storage
       return Promise.resolve(null);
     },
-    setItem(_key: any, value: any) {
-      return Promise.resolve(value);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    setItem(_key: string, _value: string): Promise<void> {
+      // Simulate setting a value in storage
+      return Promise.resolve();
     },
-    removeItem(_key: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    removeItem(_key: string): Promise<void> {
+      // Simulate removing a value from storage
       return Promise.resolve();
     },
   };
@@ -48,10 +368,12 @@ const persistConfig = {
   storage,
   whitelist: ["global"],
 };
+
 const rootReducer = combineReducers({
   global: globalReducer,
   [api.reducerPath]: api.reducer,
 });
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 /* REDUX STORE */

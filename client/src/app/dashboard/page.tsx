@@ -1,6 +1,6 @@
 "use client"
 import { CheckCircle, Package, Tag, TrendingDown, TrendingUp } from "lucide-react"
-import Navbar from "../(components)/Navbar"
+// import Navbar from "../(components)/Navbar"
 import CardExpensesSummary from "./CardExpensesSummary"
 import CardPopularProducts from "./CardPopularProducts"
 import CardPurchaseSummary from "./CardPurchaseSummary"
